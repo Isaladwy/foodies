@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function SharingPage() {
   return (
-    <div>SharingPage</div>
+    <h1>Sharing Page</h1>
   )
 }
