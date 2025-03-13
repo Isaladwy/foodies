@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import classes from './page.module.css';
 import { getMeal } from '@/lib/meals';
+import { notFound } from 'next/navigation';
 
 export default function MealDetailsPage({
   params,
@@ -8,7 +9,10 @@ export default function MealDetailsPage({
   params: { mealSlug: string };
 }) {
   const meal = getMeal(params.mealSlug);
-
+  if (!meal) {
+    notFound();
+  }
+  
   meal.instructions = meal.instructions
     .replace(/\r\n/g, '<br />')
     .replace(/\n/g, '<br />');
