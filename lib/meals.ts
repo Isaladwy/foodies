@@ -24,3 +24,7 @@ export function getMeal(slug: string): Meal | undefined {
   const meal = db.prepare('SELECT * FROM meals WHERE slug = ?').get(slug) as Meal;
   return meal ;
 }
+
+export function saveMeal(meal){
+  
+}
