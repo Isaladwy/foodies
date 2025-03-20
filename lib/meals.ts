@@ -1,4 +1,6 @@
 import sql from 'better-sqlite3';
+import slugify from 'slugify';
+import xss from 'xss';
 
 export interface Meal {
   id: number;
@@ -21,10 +23,14 @@ export async function getMeals() {
 }
 
 export function getMeal(slug: string): Meal | undefined {
-  const meal = db.prepare('SELECT * FROM meals WHERE slug = ?').get(slug) as Meal;
-  return meal ;
+  const meal = db
+    .prepare('SELECT * FROM meals WHERE slug = ?')
+    .get(slug) as Meal;
+  return meal;
 }
 
-export function saveMeal(meal){
-  
+export function saveMeal(meal: Meal) {
+  meal.slug = slugify(meal.title, { lower: true });
+  meal.instructions = xss(meal.instructions);
+
 }
