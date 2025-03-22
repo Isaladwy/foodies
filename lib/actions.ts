@@ -1,5 +1,7 @@
 'use server'
 
+import { saveMeal } from "./meals";
+
 
   export async function shareMeal(formData: FormData) {
 
@@ -12,5 +14,5 @@
       image: formData.get('image'),
     };
 
-    console.log(meal);
+    await saveMeal(meal);
   }
