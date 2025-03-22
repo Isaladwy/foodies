@@ -13,6 +13,17 @@ export async function shareMeal(formData: FormData) {
     image: formData.get('image'),
   };
 
-  await saveMeal(meal);
+  if (!meal.title || !meal.creator || !meal.creator_email || !meal.summary || !meal.instructions || !meal.image) {
+    throw new Error('Missing required fields');
+  }
+
+  await saveMeal({
+    title: meal.title.toString(),
+    creator: meal.creator.toString(),
+    creator_email: meal.creator_email.toString(),
+    summary: meal.summary.toString(),
+    instructions: meal.instructions.toString(),
+    image: meal.image.toString(),
+  });
   redirect('/meals');
 }
