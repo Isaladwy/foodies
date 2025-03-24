@@ -17,6 +17,7 @@ export async function shareMeal(formData: FormData) {
     !meal.title ||
     !meal.creator ||
     !meal.creator_email ||
+    !meal.creator_email.toString().includes('@') ||
     !meal.summary ||
     !meal.instructions ||
     !meal.image
