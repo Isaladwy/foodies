@@ -4,13 +4,20 @@ import { redirect } from 'next/navigation';
 import { saveMeal } from './meals';
 
 export async function shareMeal(formData: FormData) {
+  const image = formData.get('image');
+
+  // Validate that image is a File object
+  if (!image || !(image instanceof File) || image.size === 0) {
+    throw new Error('Please provide a valid image');
+  }
+
   const meal = {
     creator: formData.get('name'),
     creator_email: formData.get('email'),
     title: formData.get('title'),
     summary: formData.get('summary'),
     instructions: formData.get('instructions'),
-    image: formData.get('image'),
+    image: image, // Now we're sure this is a valid File object
   };
 
   if (
@@ -25,13 +32,11 @@ export async function shareMeal(formData: FormData) {
     throw new Error('Missing required fields');
   }
 
-  await saveMeal({
-    title: meal.title.toString(),
-    creator: meal.creator.toString(),
-    creator_email: meal.creator_email.toString(),
-    summary: meal.summary.toString(),
-    instructions: meal.instructions.toString(),
-    image: meal.image as unknown as File,
-  });
-  redirect('/meals');
+  try {
+    await saveMeal(meal);
+    redirect('/meals');
+  } catch (error) {
+    console.error('Error saving meal:', error);
+    throw new Error('Failed to create the meal. Please try again later.');
+  }
 }
