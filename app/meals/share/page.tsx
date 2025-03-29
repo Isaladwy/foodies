@@ -13,7 +13,9 @@ export default function ShareMealPage() {
         <p>Or any other meal you feel needs sharing!</p>
       </header>
       <main className={classes.main}>
-        <form className={classes.form} action={shareMeal}>
+        <form className={classes.form} action={async (formData: FormData) => {
+          await shareMeal(formData);
+        }}>
           <div className={classes.row}>
             <p>
               <label htmlFor="name">Your name</label>
