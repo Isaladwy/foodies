@@ -27,7 +27,9 @@ export async function shareMeal(formData: FormData) {
     !meal.image ||
     meal.image.size === 0
   ) {
-    throw new Error('Invalid input');
+    return{
+      message: 'Invalid input. Please fill all the fields.',
+    }
   }
 
   await saveMeal(meal);
