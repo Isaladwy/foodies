@@ -4,6 +4,11 @@ import Link from 'next/link';
 import MealsGrid from '@/components/meals/meals-grid';
 import { getMeals } from '@/lib/meals';
 
+export const metadata = {
+  title: 'All Meals',
+  description: 'Browse the delicious meals shared by a food-loving community.',
+};
+
 async function Meals() {
   const meals = await getMeals();
 
@@ -26,7 +31,9 @@ export default function MealsPage() {
         </p>
       </header>
       <main className={classes.main}>
-        <Suspense fallback={<p className={classes.loading}>Fetching Meals...</p>}> 
+        <Suspense
+          fallback={<p className={classes.loading}>Fetching Meals...</p>}
+        >
           <Meals />
         </Suspense>
       </main>
