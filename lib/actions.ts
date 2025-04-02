@@ -2,18 +2,18 @@
 import { redirect } from 'next/navigation';
 import { saveMeal } from './meals';
 
-function isInvalidText(text) {
+function isInvalidText(text: string | null): boolean {
   return !text || text.trim() === '';
 }
 
-export async function shareMeal(prevState, formData: FormData) {
+export async function shareMeal(prevState: any, formData: FormData) {
   const meal = {
-    creator: formData.get('name'),
-    creator_email: formData.get('email'),
-    title: formData.get('title'),
-    summary: formData.get('summary'),
-    instructions: formData.get('instructions'),
-    image: formData.get('image'),
+    creator: formData.get('name') as string,
+    creator_email: formData.get('email') as string,
+    title: formData.get('title') as string,
+    summary: formData.get('summary') as string,
+    instructions: formData.get('instructions') as string,
+    image: formData.get('image') as File,
   };
 
   if (
@@ -22,13 +22,12 @@ export async function shareMeal(prevState, formData: FormData) {
     isInvalidText(meal.instructions) ||
     isInvalidText(meal.creator) ||
     isInvalidText(meal.creator_email) ||
-    isInvalidText(meal.image) ||
-    !meal.creator_email?.includes('@') ||
-    !meal.image ||
+    !meal.creator_email.includes('@') ||
+    !(meal.image instanceof File) ||
     meal.image.size === 0
   ) {
     return {
-      message: 'Invalid input. Please fill all the fields.',
+      message: 'Invalid input. Please fill all the fields and select an image.',
     };
   }
 
