@@ -7,7 +7,7 @@ export interface Meal {
   id?: number;
   title: string;
   slug?: string;
-  image: string | File;
+  image: string;
   summary: string;
   instructions: string;
   creator: string;
@@ -34,7 +34,7 @@ export async function saveMeal(meal: Meal) {
   meal.slug = slugify(meal.title, { lower: true });
   meal.instructions = xss(meal.instructions);
 
-  if (meal.image instanceof File) {
+  if (meal.image) {
     const extension = meal.image.name.split('.').pop();
     const fileName = `${meal.slug}.${extension}`;
     const filePath = `public/images/${fileName}`;
