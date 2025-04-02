@@ -6,7 +6,7 @@ import MealsFormSubmit from '@/components/meals/meals-form-submit';
 import { useFormState } from 'react-dom';
 
 export default function ShareMealPage() {
-  const [state, formAction] = useFormState(shareMeal, { message: null });
+  const [state, formAction] = useFormState(shareMeal, { message: '' });
 
   return (
     <>

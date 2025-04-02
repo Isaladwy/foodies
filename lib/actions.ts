@@ -6,7 +6,7 @@ function isInvalidText(text: string | null): boolean {
   return !text || text.trim() === '';
 }
 
-export async function shareMeal(prevState: any, formData: FormData) {
+export async function shareMeal(prevState: { message?: string } | undefined, formData: FormData) {
   const meal = {
     creator: formData.get('name') as string,
     creator_email: formData.get('email') as string,
